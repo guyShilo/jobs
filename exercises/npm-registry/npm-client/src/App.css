@@ -1,0 +1,66 @@
+/* .App {
+  display: flex;
+  width: 75vw;
+  height: 75vh;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap');
+* {
+  font-family: 'Zen Kurenaido', sans-serif;
+}
+
+.node__root > circle {
+  fill: red;
+  color: white;
+}
+
+.rd3t-label__title {
+  stroke: none !important;
+  fill: white !important;
+}
+.node__branch > circle {
+  fill: yellow;
+}
+
+.node__leaf > circle {
+  fill: green;
+  /* Let's also make the radius of leaf nodes larger */
+}
+
+body {
+  background-color: #333152;
+}
+
+.madeBy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-144px);
+}
+
+.autoComplete {
+  /* transform: translateY(-144px); */
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  width: 75%;
+}
+
+#App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.madeBy > span {
+  font-size: 20px;
+  color: white;
+}
+.MuiInputLabel-formControl{
+  color: white !important;
+}
+
+.MuiAutocomplete-inputFocused {
+  color: #e380ff !important
+}

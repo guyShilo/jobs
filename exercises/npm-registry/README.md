@@ -1,3 +1,16 @@
+# Solution - Guy Shilo - 3.11.2021
+
+Hello, this is my solution for the package manager tree view.
+In order to run the application, please open two terminals and run: 
+1. npm run start:server
+1. npm run start:client
+
+The browser will launch a React application in http://localhost:3001
+You have an Autocomplete component, you can write the name of the package,
+and then click on it, and it will be displayed.
+
+If you have any questions do not hesitate to ask.
+
 # Exercise
 
 NodeJS has a managed packages environment called `npm`. A package is a

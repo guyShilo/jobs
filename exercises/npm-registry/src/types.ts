@@ -29,13 +29,32 @@ export interface NPMPackage {
   'dist-tags': {
     [tag: string]: string;
   };
-  versions: {
-    [version: string]: {
-      name: string;
-      version: string;
-      dependencies?: {
-        [packageName: string]: string;
-      };
-    };
+  dependencies: {
+    [packageName: string]: string;
   };
+}
+
+export interface NpmPackageResponse {
+  name: string;
+  description: string;
+  dependencies: NPMPackage['dependencies'][]
+}
+
+export interface PackagesData {
+  name: string;
+  dependencies: {
+    [packageName: string]: string;
+  };
+  children: {
+    name: string;
+    dependencies: {
+      [packageName: string]: string;
+    };
+    children?: {
+      name: string;
+      dependencies: {
+        [packageName: string]: string;
+      } | null;
+    }[];
+  }[]
 }
