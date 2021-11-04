@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start:server": "npm i && tsc-watch --onSuccess 'node -r source-map-support/register .'",
-    "start:client": "cd npm-client && npm start",
+    "start:client": "cd npm-client && npm i && npm start",
     "test": "jest",
     "lint": "eslint --cache '{src,test}/**/*.ts'"
   },
