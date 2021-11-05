@@ -31,6 +31,7 @@ export const Search: React.FC<SearchProps> = ({ setSearch }) => {
     <Autocomplete
       disablePortal
       fullWidth
+      clearOnEscape
       options={options}
       getOptionLabel={(option: { name: string }) => {
         setSearch(option.name);

@@ -47,14 +47,6 @@ export interface PackagesData {
   };
   children: {
     name: string;
-    dependencies: {
-      [packageName: string]: string;
-    };
-    children?: {
-      name: string;
-      dependencies: {
-        [packageName: string]: string;
-      } | null;
-    }[];
-  }[]
+    version: string;
+  }[];
 }

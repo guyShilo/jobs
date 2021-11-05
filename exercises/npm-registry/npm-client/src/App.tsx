@@ -6,6 +6,7 @@ import axios from 'axios';
 import Tree from 'react-d3-tree';
 import { Search } from './Search';
 import { CircularProgress } from '@material-ui/core';
+import _ from 'lodash';
 
 export interface PackagesData {
   name: string;
@@ -18,7 +19,7 @@ export interface PackagesData {
 }
 
 function App() {
-  const [packages, setPackages] = useState<PackagesData>();
+  const [packages, setPackages] = useState<PackagesData>({ name: 'snyk', children: [] });
   const [packageToSearch, setPackageToSearch] = useState('snyk');
 
   const [loading, setLoading] = useState(true);
@@ -29,44 +30,53 @@ function App() {
     try {
 
       setLoading(true);
-      const { data: { payload } } = await axios.get(`${baseUrl}/${name}/${version}`);
-      const getPackages: PackagesData = { name: payload.name, children: payload.children };
+      if (_.indexOf(name, '/') !== -1 && _.indexOf(name, '@') !== -1) {
+        name = name.split('/')[1];
+      }
 
-      setPackages(getPackages);
-      return payload;
+      const { data } = await axios.get(`${baseUrl}/${name}/${version}`);
+
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
   const getMainPackage = async (name: string, version: string) => {
-    await makeRequest(name, version);
-    setLoading(false);
+    if (name === packageToSearch) {
+      const data = await makeRequest(name, version);
+      setLoading(false);
+      return data;
+    }
+    return {}
   };
 
   useEffect(() => {
-    getMainPackage(packageToSearch, 'latest');
-  }, [packageToSearch]);
+    setTimeout(async () => {
+      const data = await getMainPackage(packageToSearch, 'latest');
+      setPackages(data[0]);
+    }, 6000);
+  }, [packages]);
 
-  return (
-    <div id="App" >
-      <div className='autoComplete'>
-        <Search setSearch={setPackageToSearch} />
-      </div>
-
-      <div style={{ width: '50em', height: '40em' }}>
-        {loading ? <Loader /> : (
-          <Tree data={packages} orientation='vertical' translate={{ x: 350, y: 100 }} pathFunc='step'
-            rootNodeClassName="node__root"
-            branchNodeClassName="node__branch"
-            leafNodeClassName="node__leaf"
-          />
-        )}
-      </div>
-      <ScrollToMove />
-      <MadeBy />
+return (
+  <div id="App" >
+    <div className='autoComplete'>
+      <Search setSearch={setPackageToSearch} />
     </div>
-  );
+
+    <div style={{ width: '50em', height: '40em' }}>
+      {loading ? <Loader /> : (
+        <Tree data={packages} orientation='vertical' translate={{ x: 350, y: 100 }} pathFunc='step'
+          rootNodeClassName="node__root"
+          branchNodeClassName="node__branch"
+          leafNodeClassName="node__leaf"
+        />
+      )}
+    </div>
+    <ScrollToMove />
+    <MadeBy />
+  </div>
+);
 }
 
 const MadeBy = () => (
